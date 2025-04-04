@@ -1,0 +1,43 @@
+#define FLEX1_PIN 32  // ADC1_CH4
+#define FLEX2_PIN 33  // ADC1_CH5
+#define FLEX3_PIN 34  // ADC1_CH6
+#define FLEX4_PIN 35  // ADC1_CH7
+#define FLEX5_PIN 36  // ADC1_CH0
+
+void setup() {
+    Serial.begin(115200);
+}
+
+void loop() {
+    int flex1 = analogRead(FLEX1_PIN);
+    int flex2 = analogRead(FLEX2_PIN);
+    int flex3 = analogRead(FLEX3_PIN);
+    int flex4 = analogRead(FLEX4_PIN);
+    int flex5 = analogRead(FLEX5_PIN);
+
+    // Convert ADC values to voltage
+    float voltage1 = flex1 * (3.3 / 4095.0);
+    float voltage2 = flex2 * (3.3 / 4095.0);
+    float voltage3 = flex3 * (3.3 / 4095.0);
+    float voltage4 = flex4 * (3.3 / 4095.0);
+    float voltage5 = flex5 * (3.3 / 4095.0);
+
+    // Print values to Serial Monitor
+    Serial.print("Flex1: "); Serial.print(flex1); Serial.print(" | Voltage1: "); Serial.print(voltage1, 3);
+    Serial.print(" || Flex2: "); Serial.print(flex2); Serial.print(" | Voltage2: "); Serial.print(voltage2, 3);
+    Serial.print(" || Flex3: "); Serial.print(flex3); Serial.print(" | Voltage3: "); Serial.print(voltage3, 3);
+    Serial.print(" || Flex4: "); Serial.print(flex4); Serial.print(" | Voltage4: "); Serial.print(voltage4, 3);
+    Serial.print(" || Flex5: "); Serial.print(flex5); Serial.print(" | Voltage5: "); Serial.println(voltage5, 3);
+
+    // Check for warning condition on Flex Sensor 2
+     if (flex1 > 2510 || flex1 < 2490) {
+        Serial.println("⚠️ WARNING: Flex Sensor 1 value out of range! ⚠️");
+    }
+
+    delay(1000);
+    if (flex2 > 2606 || flex2 < 2550) {
+        Serial.println("⚠️ WARNING: Flex Sensor 2 value out of range! ⚠️");
+    }
+
+    delay(500);  // Adjust delay as needed
+}
